@@ -7,12 +7,14 @@ public class ActivateAlarm : MonoBehaviour
     [SerializeField] private GameObject _lampAlarm1;
     [SerializeField] private GameObject _lampAlarm2;
 
+    float _numberIterations = 10;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _lampAlarm1.SetActive(true);
         _lampAlarm2.SetActive(true);
 
-        StartCoroutine(SoundVolume(true));
+        StartCoroutine(SoundVolumeAttenuation());
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -20,35 +22,33 @@ public class ActivateAlarm : MonoBehaviour
         _lampAlarm1.SetActive(false);
         _lampAlarm2.SetActive(false);
 
-        StartCoroutine(SoundVolume(false));
+        StartCoroutine(SoundVolumeMagnification());
     }
 
-    IEnumerator SoundVolume(bool turnApVolume)
+    IEnumerator SoundVolumeAttenuation()
     {
-        float numberIterations = 10;
         float durationSoundAttenuation = 0.15f;
+
+        _audioSource.Play();
+        _audioSource.loop = true;
+
+        for (int i = 1; i <= _numberIterations; i++)
+        {
+            _audioSource.volume = i / _numberIterations;
+            yield return new WaitForSeconds(durationSoundAttenuation);
+        }
+    }
+
+    IEnumerator SoundVolumeMagnification()
+    {
         float durationSoundMagnification = 0.1f;
 
-        if (turnApVolume)
+        for (int i = 1; i <= _numberIterations; i++)
         {
-            _audioSource.Play();
-            _audioSource.loop = true;
-
-            for (int i = 1; i <= numberIterations; i++)
-            {
-                _audioSource.volume = i / numberIterations;
-                yield return new WaitForSeconds(durationSoundAttenuation);
-            }
+            _audioSource.volume = (_numberIterations - i) / _numberIterations;
+            yield return new WaitForSeconds(durationSoundMagnification);
         }
-        else
-        {
-            for (int i = 1; i <= numberIterations; i++)
-            {
-                _audioSource.volume = (numberIterations - i) / numberIterations;
-                yield return new WaitForSeconds(durationSoundMagnification);
-            }
-            _audioSource.Stop();
-            _audioSource.loop = false;
-        }
+        _audioSource.Stop();
+        _audioSource.loop = false;
     }
 }

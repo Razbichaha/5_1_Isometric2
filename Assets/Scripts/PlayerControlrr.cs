@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControlrr : MonoBehaviour
 {
     [SerializeField] private float _speed = 2;
     private int _revers = -1;
-   // private SpriteRenderer _renderer;
 
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.A))
         {

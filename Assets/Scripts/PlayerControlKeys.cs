@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class PlayerControlrr : MonoBehaviour
+public class PlayerControlKeys : MonoBehaviour
 {
     [SerializeField] private float _speed = 2;
+
     private int _revers = -1;
 
     private void Update()

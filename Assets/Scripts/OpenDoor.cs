@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
+    private const string NameAnimation = "DoorClose";
+
     [SerializeField] private Animator _animator;
-    private const string _nameAnimation = "DoorClose";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _animator.SetBool(_nameAnimation, false);
+        _animator.SetBool(NameAnimation, false);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _animator.SetBool(_nameAnimation, true);
+        _animator.SetBool(NameAnimation, true);
     }
 }

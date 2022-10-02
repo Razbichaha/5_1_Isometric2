@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OpenDoor : MonoBehaviour
+public class TriggerDoor : MonoBehaviour
 {
     private const string NameAnimation = "DoorClose";
 
